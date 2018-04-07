@@ -9,8 +9,8 @@ services:
   consumer:
     build: ./SimpleConsumer
     image: kafka-simple-consumer:latest
-    environment:
-      - OFFSET=310000
+    #environment:
+    #  - OFFSET=310000
     depends_on:
       - kafka
       - zookeeper  
