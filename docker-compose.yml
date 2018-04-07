@@ -1,0 +1,33 @@
+version: '3.3'
+services:
+  producer:
+    build: ./BasicProducer
+    image: kafka-simple-producer:latest
+    depends_on:
+      - kafka
+      - zookeeper   
+  consumer:
+    build: ./SimpleConsumer
+    image: kafka-simple-consumer:latest
+    environment:
+      - OFFSET=310000
+    depends_on:
+      - kafka
+      - zookeeper  
+  kafka:
+    image: ches/kafka
+    environment:
+      - KAFKA_ADVERTISED_HOST_NAME=192.168.1.7
+      - ZOOKEEPER_IP=192.168.1.7
+      #- KAFKA_ADVERTISED_HOST_NAME=127.0.0.1
+      #- ZOOKEEPER_IP=127.0.0.1
+    ports:
+    - "7203:7203"
+    - "9092:9092"
+    depends_on:
+      - zookeeper
+  zookeeper:
+    image: jplock/zookeeper
+    ports:
+    - "2181:2181"
+
